@@ -15,6 +15,7 @@ func (svc *APIService) GetBalance(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	balance, err := svc.store.GetBalances(context.Background(), login)
 	if err != nil {
 		logger.Infof("Internal server error: %v", err)
@@ -24,6 +25,5 @@ func (svc *APIService) GetBalance(w http.ResponseWriter, r *http.Request) {
 
 	logger.Infof("Balances were successfully read")
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(balance)
 }
