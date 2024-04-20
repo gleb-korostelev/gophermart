@@ -48,6 +48,7 @@ func (svc *APIService) Orders(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	logger.Infof("New order number accepted for processing: ", string(orderID))
+	w.Header().Set("content-type", "text/plain")
 	w.WriteHeader(http.StatusAccepted)
 	w.Write([]byte("New order number accepted for processing"))
 }
