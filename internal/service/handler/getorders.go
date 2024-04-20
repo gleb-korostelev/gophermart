@@ -18,7 +18,7 @@ func (svc *APIService) GetOrders(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	orders, err := svc.store.GetOrders(context.Background(), login)
 	if err != nil {
-		logger.Infof("Internal server error: %v", err)
+		logger.Infof("Internal server error: %v, ", err, orders)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}

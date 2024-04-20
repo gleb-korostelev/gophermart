@@ -43,7 +43,7 @@ func GetOrdersData(db db.DB, ctx context.Context, login string) ([]models.Orders
 		var accrual *float64
 		var uploadedAt time.Time
 		if err := rows.Scan(&order.Number, &order.Status, &accrual, &uploadedAt); err != nil {
-			return nil, err
+			return orders, err
 		}
 		if accrual != nil {
 			order.Accrual = *accrual
