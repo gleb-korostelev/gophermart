@@ -40,7 +40,7 @@ func GetOrdersData(db db.DB, ctx context.Context, login string) ([]models.Orders
 	var orders []models.OrdersData
 	for rows.Next() {
 		var order models.OrdersData
-		var accrual *int
+		var accrual *float64
 		var uploadedAt time.Time
 		if err := rows.Scan(&order.Number, &order.Status, &accrual, &uploadedAt); err != nil {
 			return nil, err
@@ -96,7 +96,7 @@ func GetWithdrawals(db db.DB, ctx context.Context, login string) ([]models.Withd
 func GetOrder(db db.DB, ctx context.Context, order string, resultChan chan<- models.OrderResponse) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
 		var response models.OrderResponse
-		var accrual *int
+		var accrual *float64
 		sql := `
 	SELECT order_id, status, accrual
 	FROM orders

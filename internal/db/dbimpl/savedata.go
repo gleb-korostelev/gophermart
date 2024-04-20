@@ -53,7 +53,7 @@ func Withdraw(db db.DB, ctx context.Context, login string, req models.WithdrawRe
 		return err
 	}
 	defer tx.Rollback(ctx)
-	var currentBalance int
+	var currentBalance float64
 	err = tx.QueryRow(ctx, "SELECT current_balance FROM balances WHERE login=$1", login).Scan(&currentBalance)
 	if err != nil {
 		return err
