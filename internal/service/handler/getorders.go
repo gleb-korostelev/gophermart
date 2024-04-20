@@ -15,6 +15,7 @@ func (svc *APIService) GetOrders(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	orders, err := svc.store.GetOrders(context.Background(), login)
 	if err != nil {
 		logger.Infof("Internal server error: %v", err)
@@ -28,6 +29,5 @@ func (svc *APIService) GetOrders(w http.ResponseWriter, r *http.Request) {
 	}
 	logger.Infof("Orders were successfully read")
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(orders)
 }

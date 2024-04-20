@@ -13,6 +13,7 @@ import (
 
 func (svc *APIService) Login(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("Content-Type") != "application/json" {
+		logger.Infof("Invalid Content-Type")
 		http.Error(w, "Invalid Content-Type", http.StatusBadRequest)
 		return
 	}
