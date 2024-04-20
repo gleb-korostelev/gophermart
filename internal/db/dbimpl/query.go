@@ -31,7 +31,7 @@ func GetOrders(db db.DB, ctx context.Context, login string) ([]models.OrdersData
 	WHERE login=$1
 	ORDER BY uploaded_at ASC
 	`
-	rows, err := db.Query(ctx, sql, login)
+	rows, err := db.Query(context.Background(), sql, login)
 	if err != nil {
 		return nil, err
 	}
