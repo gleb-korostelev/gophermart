@@ -63,12 +63,12 @@ func ConfigInit() error {
 
 func checkConfig() error {
 	switch {
-	// case ServerAddr == "":
-	// 	return ErrNoServerAddress
-	// case DBDSN == "":
-	// 	return ErrNoDatabaseDestination
-	// case AccuralSystemAddress == "":
-	// 	return ErrNoAccuralSystemAddress
+	case ServerAddr == "":
+		return ErrNoServerAddress
+	case DBDSN == "":
+		return ErrNoDatabaseDestination
+	case AccuralSystemAddress == "":
+		return ErrNoAccuralSystemAddress
 	default:
 		return nil
 	}
