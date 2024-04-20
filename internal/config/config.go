@@ -8,10 +8,11 @@ import (
 )
 
 const (
-	MaxRoutine           = 20
-	DefaultServerAddress = "localhost:8080"
-	TokenExpiration      = 24 * time.Hour
-	JwtKeySecret         = "very-very-secret-key"
+	MaxRoutine                  = 20
+	DefaultServerAddress        = "localhost:8080"
+	DefaultAccuralSystemAddress = "localhost:8080"
+	TokenExpiration             = 24 * time.Hour
+	JwtKeySecret                = "very-very-secret-key"
 )
 
 type contextKey string
@@ -55,18 +56,19 @@ func ConfigInit() error {
 
 	// DBDSN = "postgres://postgres:7513@localhost:5432/postgres"
 	// ServerAddr = DefaultServerAddress
+	// AccuralSystemAddress = DefaultServerAddress
 
 	return checkConfig()
 }
 
 func checkConfig() error {
 	switch {
-	case ServerAddr == "":
-		return ErrNoServerAddress
-	case DBDSN == "":
-		return ErrNoDatabaseDestination
-	case AccuralSystemAddress == "":
-		return ErrNoAccuralSystemAddress
+	// case ServerAddr == "":
+	// 	return ErrNoServerAddress
+	// case DBDSN == "":
+	// 	return ErrNoDatabaseDestination
+	// case AccuralSystemAddress == "":
+	// 	return ErrNoAccuralSystemAddress
 	default:
 		return nil
 	}

@@ -19,7 +19,7 @@ func InitializeTables(db db.DB) error {
 	CREATE TABLE IF NOT EXISTS orders (
         id SERIAL PRIMARY KEY,
         login VARCHAR(255) NOT NULL,
-        order_id VARCHAR(255) NOT NULL UNIQUE,
+        order VARCHAR(255) NOT NULL UNIQUE,
 		status VARCHAR(255) NOT NULL,
 		accrual FLOAT,
         uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -28,7 +28,7 @@ func InitializeTables(db db.DB) error {
 	CREATE TABLE IF NOT EXISTS balances (
         id SERIAL PRIMARY KEY,
         login VARCHAR(255) NOT NULL,
-        current_balance FLOAT NOT NULL,
+        current FLOAT NOT NULL,
 		withdrawn FLOAT NOT NULL DEFAULT '0',
         uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
@@ -36,7 +36,7 @@ func InitializeTables(db db.DB) error {
 	CREATE TABLE IF NOT EXISTS withdrawals  (
         id SERIAL PRIMARY KEY,
         login VARCHAR(255) NOT NULL,
-        order_id VARCHAR(255) NOT NULL UNIQUE,
+        order VARCHAR(255) NOT NULL UNIQUE,
 		sum FLOAT NOT NULL,
         processed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
