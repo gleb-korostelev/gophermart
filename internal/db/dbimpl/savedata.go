@@ -31,8 +31,8 @@ func SaveUser(db db.DB, ctx context.Context, login, password string) error {
 
 func SaveOrders(db db.DB, ctx context.Context, login, orderID string) (string, bool, error) {
 	var orderLogin string
-	sqlScan := `SELECT login FROM orders WHERE order=$1`
-	sqlExec := `INSERT INTO orders (order, login, status) VALUES ($1, $2, $3)`
+	sqlScan := `SELECT login FROM orders WHERE order_id=$1`
+	sqlExec := `INSERT INTO orders (order_id, login, status) VALUES ($1, $2, $3)`
 	err := db.QueryRow(ctx, sqlScan, orderID).Scan(&orderLogin)
 	if err != nil {
 		if err == pgx.ErrNoRows {
@@ -68,7 +68,7 @@ func Withdraw(db db.DB, ctx context.Context, login string, req models.WithdrawRe
 		return err
 	}
 
-	_, err = tx.Exec(ctx, "INSERT INTO withdrawals (login, order, sum, processed_at) VALUES ($1, $2, $3, NOW())", login, req.Order, req.Sum)
+	_, err = tx.Exec(ctx, "INSERT INTO withdrawals (login, order_id, sum, processed_at) VALUES ($1, $2, $3, NOW())", login, req.Order, req.Sum)
 	if err != nil {
 		return err
 	}
