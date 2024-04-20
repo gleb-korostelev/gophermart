@@ -32,7 +32,6 @@ func (svc *APIService) Register(w http.ResponseWriter, r *http.Request) {
 	err = svc.store.Register(context.Background(), newUser)
 	if err != nil {
 		if err == config.ErrLoginExists {
-			logger.Infof("Login already taken: %v", err)
 			http.Error(w, "Login already taken", http.StatusConflict)
 			return
 		}
