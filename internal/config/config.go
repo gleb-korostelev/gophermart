@@ -54,9 +54,9 @@ func ConfigInit() error {
 		AccuralSystemAddress = accural
 	}
 
-	DBDSN = "postgres://postgres:7513@localhost:5432/postgres"
-	ServerAddr = DefaultServerAddress
-	AccuralSystemAddress = DefaultAccuralSystemAddress
+	// DBDSN = "postgres://postgres:7513@localhost:5432/postgres"
+	// ServerAddr = DefaultServerAddress
+	// AccuralSystemAddress = DefaultAccuralSystemAddress
 
 	return checkConfig()
 }
