@@ -26,7 +26,7 @@ func GetUserCred(db db.DB, ctx context.Context, login string) (string, error) {
 
 func GetOrders(db db.DB, ctx context.Context, login string) ([]models.OrdersData, error) {
 	sql := `
-	SELECT order, status, accrual, uploaded_at
+	SELECT order_id, status, accrual, uploaded_at
 	FROM orders
 	WHERE login=$1
 	ORDER BY uploaded_at ASC
@@ -70,7 +70,7 @@ func Balance(db db.DB, ctx context.Context, login string) (models.BalanceData, e
 
 func GetWithdrawals(db db.DB, ctx context.Context, login string) ([]models.Withdraws, error) {
 	sql := `
-	SELECT order, sum, processed_at
+	SELECT order_id, sum, processed_at
 	FROM withdrawals
 	WHERE login=$1
 	`
@@ -98,9 +98,9 @@ func GetOrderByNumber(db db.DB, ctx context.Context, order string, resultChan ch
 		var response models.OrderResponse
 		var accrual *float64
 		sql := `
-	SELECT order, status, accrual
+	SELECT order_id, status, accrual
 	FROM orders
-	WHERE order = $1
+	WHERE order_id = $1
 	`
 		err := db.QueryRow(ctx, sql, order).Scan(&response.Order, &response.Status, &accrual)
 		if err == pgx.ErrNoRows {
