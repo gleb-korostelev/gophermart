@@ -80,9 +80,9 @@ func (s *service) Orders(ctx context.Context, login, orderID string) (string, bo
 }
 
 func (s *service) GetOrders(ctx context.Context, login string) ([]models.OrdersData, error) {
-	orders, err := dbimpl.GetOrdersData(s.data, ctx, login)
+	orders, err := dbimpl.GetOrders(s.data, ctx, login)
 	if err != nil {
-		return nil, err
+		return orders, err
 	}
 	return orders, nil
 }
@@ -104,5 +104,5 @@ func (s *service) GetWithdrawals(ctx context.Context, login string) ([]models.Wi
 }
 
 func (s *service) GetOrderByNumber(ctx context.Context, order string, resultChan chan<- models.OrderResponse) func(ctx context.Context) error {
-	return dbimpl.GetOrder(s.data, ctx, order, resultChan)
+	return dbimpl.GetOrderByNumber(s.data, ctx, order, resultChan)
 }

@@ -24,7 +24,7 @@ func GetUserCred(db db.DB, ctx context.Context, login string) (string, error) {
 	return password, nil
 }
 
-func GetOrdersData(db db.DB, ctx context.Context, login string) ([]models.OrdersData, error) {
+func GetOrders(db db.DB, ctx context.Context, login string) ([]models.OrdersData, error) {
 	sql := `
 	SELECT order_id, status, accrual, uploaded_at
 	FROM orders
@@ -93,7 +93,7 @@ func GetWithdrawals(db db.DB, ctx context.Context, login string) ([]models.Withd
 	return withdraws, nil
 }
 
-func GetOrder(db db.DB, ctx context.Context, order string, resultChan chan<- models.OrderResponse) func(ctx context.Context) error {
+func GetOrderByNumber(db db.DB, ctx context.Context, order string, resultChan chan<- models.OrderResponse) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
 		var response models.OrderResponse
 		var accrual *float64
