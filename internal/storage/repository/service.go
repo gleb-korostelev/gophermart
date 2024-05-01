@@ -103,6 +103,10 @@ func (s *service) GetWithdrawals(ctx context.Context, login string) ([]models.Wi
 	return dbimpl.GetWithdrawals(s.data, ctx, login)
 }
 
-func (s *service) GetOrderByNumber(ctx context.Context, order string, resultChan chan<- models.OrderResponse) func(ctx context.Context) error {
-	return dbimpl.GetOrderByNumber(s.data, ctx, order, resultChan)
+func (s *service) GetOrderByNumber(ctx context.Context, orderInfo models.OrderResponse, resultChan chan<- models.OrderResponse) func(ctx context.Context) error {
+	return dbimpl.GetOrderByNumber(s.data, ctx, orderInfo, resultChan)
+}
+
+func (s *service) UpdateOrderInfo(ctx context.Context, login string, orders models.OrderResponse) error {
+	return dbimpl.UpdateOrderInfo(s.data, ctx, login, orders)
 }

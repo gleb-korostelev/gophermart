@@ -75,3 +75,19 @@ func Withdraw(db db.DB, ctx context.Context, login string, req models.WithdrawRe
 
 	return tx.Commit(ctx)
 }
+
+func UpdateOrderInfo(db db.DB, ctx context.Context, login string, orderInfo models.OrderResponse) error {
+	sql := `UPDATE orders SET status = $1, accrual = COALESCE($2, accrual) WHERE login = $3`
+
+	tx, err := db.BeginW(ctx)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback(ctx)
+
+	_, err = tx.Exec(ctx, sql, orderInfo.Status, orderInfo.Accrual, login)
+	if err != nil {
+		return err
+	}
+	return tx.Commit(ctx)
+}

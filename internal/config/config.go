@@ -10,7 +10,7 @@ import (
 const (
 	MaxRoutine                  = 20
 	DefaultServerAddress        = "localhost:8080"
-	DefaultAccuralSystemAddress = "localhost:8080"
+	DefaultAccuralSystemAddress = "localhost:8081"
 	TokenExpiration             = 24 * time.Hour
 	JwtKeySecret                = "very-very-secret-key"
 )

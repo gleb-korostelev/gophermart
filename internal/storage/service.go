@@ -16,5 +16,6 @@ type Storage interface {
 	GetBalances(ctx context.Context, login string) (models.BalanceData, error)
 	ProcessWithdrawal(ctx context.Context, login string, req models.WithdrawRequest) error
 	GetWithdrawals(ctx context.Context, login string) ([]models.Withdraws, error)
-	GetOrderByNumber(ctx context.Context, order string, resultChan chan<- models.OrderResponse) func(ctx context.Context) error
+	GetOrderByNumber(ctx context.Context, orderInfo models.OrderResponse, resultChan chan<- models.OrderResponse) func(ctx context.Context) error
+	UpdateOrderInfo(ctx context.Context, login string, orders models.OrderResponse) error
 }

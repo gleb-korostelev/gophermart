@@ -1,6 +1,10 @@
 package service
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/gleb-korostelev/gophermart.git/internal/models"
+)
 
 type APIServiceI interface {
 	Register(w http.ResponseWriter, r *http.Request)
@@ -10,5 +14,5 @@ type APIServiceI interface {
 	GetBalance(w http.ResponseWriter, r *http.Request)
 	Withdraw(w http.ResponseWriter, r *http.Request)
 	GetWithdrawals(w http.ResponseWriter, r *http.Request)
-	GetOrderByNumber(w http.ResponseWriter, r *http.Request)
+	CheckOrderStatus(login string, orders []models.OrdersData) []models.OrdersData
 }

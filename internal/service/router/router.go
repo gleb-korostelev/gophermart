@@ -14,7 +14,6 @@ func RouterInit(svc service.APIServiceI, logger *zap.Logger) *chi.Mux {
 	router.Use(middleware.LoggingMiddleware(logger))
 	router.Post("/api/user/register", svc.Register)
 	router.Post("/api/user/login", svc.Login)
-	router.Get("/api/orders/{number}", svc.GetOrderByNumber)
 	router.Route("/", func(r chi.Router) {
 		r.Use(middleware.EnsureUserCookie)
 		r.Post("/api/user/orders", svc.Orders)

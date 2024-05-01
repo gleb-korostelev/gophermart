@@ -7,7 +7,6 @@ import (
 	"github.com/gleb-korostelev/gophermart.git/internal/config"
 	"github.com/gleb-korostelev/gophermart.git/internal/db"
 	"github.com/gleb-korostelev/gophermart.git/internal/models"
-	"github.com/jackc/pgx/v5"
 )
 
 func GetUserCred(db db.DB, ctx context.Context, login string) (string, error) {
@@ -93,24 +92,13 @@ func GetWithdrawals(db db.DB, ctx context.Context, login string) ([]models.Withd
 	return withdraws, nil
 }
 
-func GetOrderByNumber(db db.DB, ctx context.Context, order string, resultChan chan<- models.OrderResponse) func(ctx context.Context) error {
+func GetOrderByNumber(db db.DB, ctx context.Context, orderInfo models.OrderResponse, resultChan chan<- models.OrderResponse) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
 		var response models.OrderResponse
-		var accrual *float64
-		sql := `
-	SELECT order_id, status, accrual
-	FROM orders
-	WHERE order_id = $1
-	`
-		err := db.QueryRow(ctx, sql, order).Scan(&response.Order, &response.Status, &accrual)
-		if err == pgx.ErrNoRows {
-			return config.ErrNotFound
-		} else if err != nil {
+		sql := `UPDATE orders SET status = $1, accrual = $2 WHERE order_number = $3`
+		_, err := db.Exec(ctx, sql, orderInfo.Status, orderInfo.Accrual, orderInfo.Order)
+		if err != nil {
 			return err
-		}
-
-		if accrual != nil {
-			response.Accrual = *accrual
 		}
 		select {
 		case resultChan <- response:

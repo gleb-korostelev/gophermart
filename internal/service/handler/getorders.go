@@ -27,7 +27,9 @@ func (svc *APIService) GetOrders(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 		return
 	}
+	res := svc.CheckOrderStatus(login, orders)
+
 	logger.Infof("Orders were successfully read")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(orders)
+	json.NewEncoder(w).Encode(res)
 }
