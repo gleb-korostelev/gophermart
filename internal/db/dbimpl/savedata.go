@@ -89,5 +89,13 @@ func UpdateOrderInfo(db db.DB, ctx context.Context, login string, orderInfo mode
 	if err != nil {
 		return err
 	}
+
+	if orderInfo.Accrual != 0 {
+		_, err = tx.Exec(ctx, "UPDATE balances SET current = current + $1 WHERE login = $2", orderInfo.Accrual, login)
+		if err != nil {
+			return err
+		}
+	}
+
 	return tx.Commit(ctx)
 }
